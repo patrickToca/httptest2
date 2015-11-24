@@ -1,4 +1,4 @@
-package httptest
+package httptest2
 
 import (
 	"net/http"
@@ -60,6 +60,7 @@ func (this *Fixture) TestCallingWriteCallsWriteHeaderWithHTTP200() {
 	this.serveHTTP(write)
 	this.So(this.recorder.Body.String(), should.Equal, "hi first")
 	this.So(this.recorder.Flushed, should.BeFalse)
+	this.So(this.recorder.Code, should.Equal, 200)
 }
 func write(response http.ResponseWriter, _ *http.Request) {
 	response.Write([]byte("hi first"))

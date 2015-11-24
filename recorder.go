@@ -1,5 +1,5 @@
 // Package httptest provides utilities for HTTP testing.
-package httptest
+package httptest2
 
 import (
 	"bytes"
@@ -14,7 +14,7 @@ type ResponseRecorder struct {
 	Body      *bytes.Buffer // the bytes.Buffer to append written data to
 	Flushed   bool
 
-	wroteHeader bool
+	wroteStatusCode bool
 }
 
 // NewRecorder returns an initialized ResponseRecorder.
@@ -30,7 +30,7 @@ func NewRecorder() *ResponseRecorder {
 // all you like until calling WriteHeader or Write. At that point any
 // modifications to the headers will not stick.
 func (this *ResponseRecorder) Header() http.Header {
-	if this.wroteHeader {
+	if this.wroteStatusCode {
 		return make(http.Header)
 	}
 	return this.HeaderMap
@@ -39,10 +39,10 @@ func (this *ResponseRecorder) Header() http.Header {
 // WriteHeader sets rw.Code. Only the first call will
 // have any effect.
 func (this *ResponseRecorder) WriteHeader(status int) {
-	if !this.wroteHeader {
+	if !this.wroteStatusCode {
 		this.Code = status
 	}
-	this.wroteHeader = true
+	this.wroteStatusCode = true
 }
 
 // Write writes to Body. Will also call WriteHeader(200) if that
