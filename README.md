@@ -1,4 +1,4 @@
-# httptest
+# httptest2
 --
     import "github.com/smartystreets/httptest2"
 
